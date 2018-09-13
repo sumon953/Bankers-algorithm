@@ -1,0 +1,82 @@
+#!/bin/bash
+declare -A allocation
+declare -A claim
+declare -A need
+declare -A ia
+declare -A ta
+declare -A ca
+echo "read number of row"
+read m
+echo "read column"
+read n
+echo "read allocation matrix"
+for ((i=1;i<=m;i++)) do
+    for ((j=1;j<=n;j++)) do
+        read x
+        allocation[$i,$j]=$x
+    done
+done
+echo "read claime matrix"
+for ((i=1;i<=m;i++)) do
+    for ((j=1;j<=n;j++)) do
+        read y
+        claim[$i,$j]=$y
+    done
+done
+for ((i=1;i<=m;i++)) do
+    for ((j=1;j<=n;j++)) do
+        p=${claim[$i,$j]}
+	q=${allocation[$i,$j]}
+	r=`expr $p - $q`
+	need[$i,$j]=$r
+    done
+done
+echo "read initial availibility"
+for ((i=1;i<=1;i++)) do
+    for ((j=1;j<=n;j++)) do
+        read x
+        ia[$i,$j]=$x
+    done
+done
+for((i=1;i<=n;i++))
+do
+al[i]=0
+done
+for ((i=1;i<=n;i++)) do
+    for ((j=1;j<=m;j++)) do
+x=${allocation[$j,$i]}
+	al[i]=`expr ${al[i]} + $x`
+    done
+done
+#read total allocation in a matrix
+echo "total allocation "
+for ((i=1;i<=1;i++)) do
+    for ((j=1;j<=n;j++)) do
+        ta[$i,$j]=${al[$j]}
+    done
+done
+for ((i=1;i<=1;i++)) do
+    for ((j=1;j<=n;j++)) do
+        p=${ia[$i,$j]}
+	q=${ta[$i,$j]}
+r=`expr $p - $q`
+	ca[$i,$j]=$r
+    done
+done
+for ((i=1;i<=m;i++)) do
+    for ((j=1;j<=n;j++)) do
+  echo "${need[$i,$j]}"
+    done
+done
+echo "total allocation"
+for ((i=1;i<=1;i++)) do
+    for ((j=1;j<=3;j++)) do
+       echo "${ta[$i,$j]}"
+    done
+done
+echo "current availibility"
+for ((i=1;i<=1;i++)) do
+    for ((j=1;j<=3;j++)) do
+       echo "${ca[$i,$j]}"
+    done
+done
